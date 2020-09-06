@@ -10,15 +10,15 @@ import { SecondStepComponent } from './components/second-step/second-step.compon
 export class AppComponent {
   title = 'mat-stepper';
 
-  @ViewChild('stepOne') stepOneComponent: FirstStepComponent;
-  @ViewChild('stepTwo') stepTwoComponent: SecondStepComponent;
+  @ViewChild('stepOne', { static: false }) stepOneComponent: FirstStepComponent;
+  @ViewChild('stepTwo', { static: false }) stepTwoComponent: SecondStepComponent;
 
   get frmStepOne() {
-    return this.stepOneComponent ? this.stepOneComponent.frmStepOne : null;
+    return this.stepOneComponent ? this.stepOneComponent.frmStepOne$ : null;
  }
 
  get frmStepTwo() {
-    return this.stepTwoComponent ? this.stepTwoComponent.frmStepTwo : null;
+    return this.stepTwoComponent ? this.stepTwoComponent.frmStepTwo$ : null;
  }
 
 }

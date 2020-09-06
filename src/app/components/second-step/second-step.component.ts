@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-second-step',
@@ -8,7 +10,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class SecondStepComponent implements OnInit {
 
-  frmStepTwo: FormGroup;
+  frmStepTwo: FormGroup; // to deal with the form in the template
+  frmStepTwo$: Observable<FormGroup>;
+
+  private frmStepTwoOb$ = new BehaviorSubject<FormGroup>(null);
+  frmStepTwoListener$: Observable<FormGroup> = this.frmStepTwoOb$.asObservable();
 
   constructor(private formBuilder: FormBuilder) {
 
@@ -18,7 +24,18 @@ export class SecondStepComponent implements OnInit {
 
   }
 
+  setFormTwo(form: FormGroup) {
+    this.frmStepTwoOb$.next(form);
+  }
+
   ngOnInit(): void {
+
+    this.setFormTwo(this.frmStepTwo);
+
+    this.frmStepTwo$ = this.frmStepTwoListener$.pipe(
+      delay(0)
+    )
+
   }
 
 }
